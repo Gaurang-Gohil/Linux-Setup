@@ -1,0 +1,8 @@
+bibata-cursor-theme-bin
+flat-remix
+gtk-engine-murrine
+slack-desktop
+ttf-victor-mono
+visual-studio-code-bin
+wallust
+wlogout

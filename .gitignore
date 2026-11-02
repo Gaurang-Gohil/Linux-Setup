@@ -1,0 +1,5 @@
+*.bak
+*.orig
+*.log
+__pycache__/
+config/hypr/wallpaper_effects/

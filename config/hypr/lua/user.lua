@@ -1,0 +1,21 @@
+-- YOUR changes go here. This file loads last, so anything here overrides the other files.
+-- After saving, apply with:  hyprctl reload     Check for mistakes with:  Hyprland --verify-config
+--
+-- Examples (remove the leading "--" to turn one on):
+--
+-- Bigger gaps:
+-- hl.config({ general = { gaps_in = 6, gaps_out = 12 } })
+--
+-- Your own shortcut, e.g. SUPER+C opens VS Code:
+-- hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("code"), { description = "VS Code" })
+--
+-- Start an app at login:
+-- hl.on("hyprland.start", function() hl.exec_cmd("discord") end)
+--
+-- Hyprlust-style: send apps to fixed workspaces automatically
+-- hl.window_rule({ match = { tag = "browser" },      workspace = "2" })
+-- hl.window_rule({ match = { tag = "file-manager" }, workspace = "3" })
+-- hl.window_rule({ match = { tag = "im" },           workspace = "4" })
+-- hl.window_rule({ match = { tag = "gamestore" },    workspace = "5" })
+-- hl.window_rule({ match = { tag = "games" },        workspace = "8" })
+-- hl.window_rule({ match = { tag = "multimedia" },   workspace = "9 silent" })

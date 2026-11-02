@@ -1,0 +1,171 @@
+/* Notification panel (SUPER+N). Colors come from your theme (wallust/colors-wallust.css),
+   so they follow SUPER+T. Original style saved as control-center.css.bak */
+
+@define-color text     @foreground;
+@define-color accent   @color12;
+@define-color panel    @color0;
+@define-color card     alpha(mix(@color0, @foreground, 0.07), 1.0);
+@define-color card-hi  alpha(mix(@color0, @foreground, 0.12), 1.0);
+@define-color subtle   alpha(@foreground, 0.72);
+@define-color faint    alpha(@foreground, 0.45);
+
+* {
+  all: unset;
+  color: @text;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  transition: 150ms;
+}
+
+/* ---- the panel */
+.control-center {
+  background: @panel;
+  border: 1px solid alpha(@accent, 0.35);
+  border-radius: 16px;
+  margin: 8px;
+  padding: 14px;
+  box-shadow: 0 10px 30px alpha(black, 0.45);
+}
+.control-center .control-center-list { background: transparent; }
+
+/* ---- notification cards inside the panel */
+.control-center .notification-row { outline: none; margin: 0; padding: 0; }
+.control-center .notification-row .notification-background {
+  background: @card;
+  border-radius: 12px;
+  margin: 5px 0;
+}
+.control-center .notification-row .notification-background:hover { background: @card-hi; }
+.control-center .notification-row .notification-background .notification .notification-content {
+  margin: 11px 12px;
+}
+.control-center .notification-row .notification-background .notification.critical {
+  border: 1px solid @color1;
+  border-radius: 12px;
+}
+.control-center .notification-row .notification-background .notification.critical .summary { color: @color1; }
+
+.control-center .summary { font-size: 14px; font-weight: 700;
+  line-height: 1.3; color: @text; margin-bottom: 2px; }
+.control-center .body    { font-size: 13px; font-weight: 400;
+  line-height: 1.4;
+  padding-top: 2px; color: @subtle; }
+.control-center .time    { font-size: 11px; color: @faint; margin-right: 26px; }
+.control-center .image   { margin: 2px 12px 0 0; border-radius: 9px; }
+
+/* action buttons ("Open", "Delete", "Copy 4869") */
+.control-center .notification-row .notification-background .notification > *:last-child > * { min-height: 10px; }
+.control-center .notification-row .notification-background .notification > *:last-child > * .notification-action {
+  background: alpha(@foreground, 0.07);
+  border-radius: 8px;
+  margin: 0 6px 9px 6px;
+  padding: 6px;
+  font-weight: 600;
+}
+.control-center .notification-row .notification-background .notification > *:last-child > * .notification-action:hover {
+  background: alpha(@accent, 0.25);
+}
+
+/* per-card close button */
+.control-center .notification-row .notification-background .close-button {
+  margin: 7px; padding: 2px; border-radius: 7px; color: @faint; background: transparent;
+}
+.control-center .notification-row .notification-background .close-button:hover {
+  background: alpha(@accent, 0.3); color: @text;
+}
+
+/* ---- grouped notifications (several from one app) */
+.notification-group { margin: 2px 0; }
+.notification-group-headers { margin: 8px 4px 2px 4px; }
+.notification-group-headers label { font-weight: 700; color: @subtle; }
+.notification-group-icon { color: @subtle; margin-right: 6px; }
+.notification-group-collapse-button, .notification-group-close-all-button {
+  border-radius: 7px; padding: 2px 4px; margin-left: 4px; color: @faint; background: transparent;
+}
+.notification-group-collapse-button:hover, .notification-group-close-all-button:hover {
+  background: alpha(@accent, 0.25); color: @text;
+}
+.notification-group.collapsed .notification-row:not(:last-child) .notification-background { opacity: 0.6; }
+
+/* ---- header: "Notifications" + Clear all */
+.widget-title { margin: 4px 2px 10px 2px; }
+.widget-title > label { font-size: 17px; font-weight: 700; }
+.widget-title button {
+  background: alpha(@accent, 0.18);
+  color: @accent;
+  border-radius: 9px;
+  padding: 5px 12px;
+  font-weight: 600;
+}
+.widget-title button:hover { background: alpha(@accent, 0.32); }
+
+/* ---- Do not disturb */
+.widget-dnd {
+  background: @card;
+  border-radius: 12px;
+  margin: 0 0 10px 0;
+  padding: 9px 12px;
+}
+.widget-dnd > label { font-weight: 600; color: @subtle; }
+.widget-dnd > switch {
+  background: alpha(@foreground, 0.18);
+  border-radius: 999px;
+  min-width: 38px;
+  min-height: 20px;
+}
+.widget-dnd > switch:checked { background: @accent; }
+.widget-dnd > switch slider {
+  background: @text;
+  border-radius: 999px;
+  min-width: 16px;
+  min-height: 16px;
+  margin: 2px;
+}
+
+/* ---- media player (shown while music/video plays)
+   swaync draws the album art as a blurred background with an overlay on top; "all: unset" above
+   wipes that, so it is restored here (blur + darkening keeps the text readable). */
+.widget-mpris { margin: 0 0 10px 0; padding: 0; }
+.widget-mpris .widget-mpris-player {
+  margin: 0 4px;
+  border-radius: 12px;
+  background: @card;
+}
+.widget-mpris .widget-mpris-player .mpris-background {
+  filter: blur(18px) brightness(0.45) saturate(1.2);
+  border-radius: 12px;
+}
+.widget-mpris .widget-mpris-player .mpris-overlay {
+  padding: 12px;
+  border-radius: 12px;
+  background-color: alpha(@color0, 0.45);
+}
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-album-art {
+  -gtk-icon-size: 64px;
+  border-radius: 10px;
+  margin-right: 12px;
+  box-shadow: 0 4px 12px alpha(black, 0.5);
+}
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-title {
+  font-weight: 700; font-size: 15px; color: white;
+  text-shadow: 0 1px 3px alpha(black, 0.8);
+}
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-subtitle {
+  font-size: 13px; color: alpha(white, 0.8);
+  text-shadow: 0 1px 3px alpha(black, 0.8);
+}
+/* play / pause / next ... */
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button {
+  color: white; border-radius: 8px; padding: 5px; margin: 0 3px; -gtk-icon-size: 18px;
+}
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:hover { background: alpha(white, 0.18); }
+/* the < > arrows to switch between players (when several are playing) */
+.widget-mpris > box > button {
+  color: @subtle; border-radius: 8px; padding: 4px; margin: 0 2px; -gtk-icon-size: 14px;
+}
+.widget-mpris > box > button:hover { background: alpha(@accent, 0.25); color: @text; }
+.widget-mpris > box > button:disabled { opacity: 0.25; }
+
+/* progress bars (e.g. volume) */
+trough { background: alpha(@foreground, 0.15); border-radius: 6px; min-height: 6px; }
+progressbar, progress { background: @accent; border-radius: 6px; min-height: 6px; }

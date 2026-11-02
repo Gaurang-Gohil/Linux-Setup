@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Theme lock for wallust (set up for SUPER+T).
+# If ~/.config/wallust/locked-theme names a theme, wallpaper changes ("wallust run <image>")
+# apply that theme instead of colors from the wallpaper. Everything else goes to the real wallust.
+# Wallpaper changes also start building the wallpaper-effect previews in the background.
+lock="$HOME/.config/wallust/locked-theme"
+if [[ "$1" == "run" ]]; then
+    # wallpaper changed: build the SUPER+SHIFT+W effect previews in the background
+    setsid -f "$HOME/.config/hypr/UserScripts/WallpaperEffects.sh" --previews-only >/dev/null 2>&1 < /dev/null
+    if [[ -s "$lock" ]]; then
+        exec /usr/bin/wallust theme -q -- "$(head -n1 "$lock")"
+    fi
+fi
+exec /usr/bin/wallust "$@"
